@@ -1,0 +1,7 @@
+{
+  "name": "maven-dependency-view",
+  "version": "1.0.0",
+  "dependencies": {
+    "viz.js": "^2.1.2"
+  }
+}

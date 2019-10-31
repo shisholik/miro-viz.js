@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://miro.com/app/static/styles.1.0.css"/>
+    <script src="https://miro.com/app/static/sdk.1.1.js"></script>
+    <script>
+        function createNode(text, x, y) {
+          let sticker = (miro.board.widgets.create({type: 'sticker', text: text, x: x, y: y}))[0]
+          
+        }
+      
+        function parseTextAndCreateNodes() {
+          var text = document.getElementById("digraph").value
+          var lines = text.split('\n');
+          var widgets1 =[]
+          for(var i = 0;i < lines.length;i++){
+            widgets1.push({type: 'sticker', text: lines[i], x: i*200, y: 0})
+                  //createNode(lines[i], i*200, 0)
+          }
+          console.log(widgets1)
+          miro.board.widgets.create(widgets1)
+        }
+    
+    </script>
+    <style>
+        .rtb-sidebar-caption {
+            font-size: 14px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.8);
+            padding: 24px 0 0 24px;
+        }
+        .no-selected-widget {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 60px;
+            color: #999;
+        }
+        .widget-info {
+            padding: 20px 24px 0 24px;
+            height: 100%;
+        }
+        .editor {
+            width: 310px;
+            height: calc(100% - 240px);
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: Arial;
+            font-size: 14px;
+            margin: 0 -10px;
+            resize: none;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="miro-h1">Paste digraph here:</div>
+    <div class="widget-info">
+    <textarea id="digraph" class="editor" rows="50" cols="80">
+    digraph "projects.pt.runner:Server:pom:1.0" {
+	"projects.pt.runner:Server:pom:1.0" -> "platform.server.osgi:PlatformOSGi:jar:1.0:compile" ;
+	"projects.pt.runner:Server:pom:1.0" -> "platform.server.core.general:Sentry:jar:1.0:compile" ;
+	"platform.server.core.general:Sentry:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"platform.server.core.general:System:jar:1.0:compile" -> "platform.server.core.general:SystemCommon:jar:1.0:compile" ;
+	"platform.server.core.general:System:jar:1.0:compile" -> "platform.server.osgi:PlatformOSGi:jar:1.0:compile" ;
+	"platform.server.core.general:System:jar:1.0:compile" -> "platform.server.core.general:dumper-api:jar:1.0:compile" ;
+	"platform.server.core.general:Sentry:jar:1.0:compile" -> "platform.server.core.general:Configurator:jar:1.0:compile" ;
+	"platform.server.core.general:Configurator:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"platform.server.core.general:Configurator:jar:1.0:compile" -> "platform.server.core.admin:Shared:jar:1.0:compile" ;
+	"platform.server.core.admin:Shared:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"projects.pt.runner:Server:pom:1.0" -> "projects.pt.server:Application:jar:1.0:compile" ;
+	"projects.pt.server:Application:jar:1.0:compile" -> "platform.server.core.general:Configurator:jar:1.0:compile" ;
+	"projects.pt.server:Application:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"projects.pt.runner:Server:pom:1.0" -> "platform.server.messages:ActiveMQMessages:jar:1.0:compile" ;
+	"platform.server.messages:ActiveMQMessages:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"platform.server.messages:ActiveMQMessages:jar:1.0:compile" -> "platform.server.messages:MessagesCommon:jar:1.0:compile" ;
+	"platform.server.messages:MessagesCommon:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"platform.server.messages:MessagesCommon:jar:1.0:compile" -> "platform.server.core.general:Protocol:jar:1.0:compile" ;
+	"platform.server.core.general:Protocol:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"platform.server.core.general:Protocol:jar:1.0:compile" -> "platform.server.core.general:ProtocolAnnotations:jar:1.0:compile" ;
+	"platform.server.messages:ActiveMQMessages:jar:1.0:compile" -> "platform.server.core.network:ClusterCommon:jar:1.0:compile" ;
+	"platform.server.core.network:ClusterCommon:jar:1.0:compile" -> "platform.server.core.general:System:jar:1.0:compile" ;
+	"platform.server.core.network:ClusterCommon:jar:1.0:compile" -> "platform.server.core.general:Protocol:jar:1.0:compile" ;
+}
+    </textarea>
+    <br>
+    <button class="miro-btn miro-btn--primary miro-btn--small" onclick="parseTextAndCreateNodes()">Primary</button>
+    <button class="miro-btn miro-btn--primary miro-btn--small" onclick="reloadSandbox()" >Reload Sandbox</button>
+    </div>
+  </body>
+</html>
